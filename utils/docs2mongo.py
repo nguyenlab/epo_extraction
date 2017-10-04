@@ -108,7 +108,7 @@ def readdoc(filename):
             
             for paragraph in description.itertext():
                 if (paragraph):
-                    patdoc.description[description.get("lang")].append(paragraph.strip().replace("\n", ""))
+                    patdoc.description[description.get("lang")].append(paragraph.strip().replace("\n", " ").strip())
 
         
 
@@ -127,14 +127,14 @@ def readdoc(filename):
                         add_claim = True
                     else:
                         if (len(patdoc.claims[clm_lang]) > 0):
-                            patdoc.claims[clm_lang][-1].text.append(paragraph.text.strip().replace("\n", ""))
+                            patdoc.claims[clm_lang][-1].text.append(paragraph.text.strip().replace("\n", " "))
                         else:
                             add_claim = True
 
                     if (add_claim):
                         claim = PatentClaim()
                         claim.number = claim_count
-                        claim.text.append(paragraph.text.strip().replace("\n", ""))
+                        claim.text.append(paragraph.text.strip().replace("\n", " "))
                         patdoc.claims[clm_lang].append(claim)
                         claim_count += 1
 
@@ -145,7 +145,7 @@ def readdoc(filename):
 
                     for paragraph in clm.itertext():
                         if (paragraph):
-                            claim.text.append(paragraph.strip().replace("\n", ""))
+                            claim.text.append(paragraph.strip().replace("\n", " "))
 
                     patdoc.claims[clm_lang].append(claim)
     except ElementTree.ParseError as e:
