@@ -1,4 +1,4 @@
-__author__ = 'danilo@jaist.ac.jp'
+__author__ = "Danilo S. Carvalho <danilo@jaist.ac.jp>"
 
 import os
 import datetime
@@ -6,7 +6,7 @@ from pymongo import MongoClient
 from saf.formatters.conll import CoNLLFormatter
 from saf.constants import annotation
 
-from annotation.claim_importer import EpoClaimImporter
+from epo_extraction.annotation.claim_importer import EPOClaimImporter
 
 
 class AnnotationCorpus(object):
@@ -23,7 +23,7 @@ class AnnotationCorpus(object):
         annotcoll = db.sample_annot
         patcoll = db.patents
 
-        claim_importer = EpoClaimImporter()
+        claim_importer = EPOClaimImporter()
 
         for doc_id in annotcoll.find():
             patdoc = patcoll.find({"country": doc_id["country"], "number": doc_id["number"], "kind": doc_id["kind"]},

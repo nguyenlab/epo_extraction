@@ -1,4 +1,4 @@
-__author__ = 'danilo@jaist.ac.jp'
+__author__ = "Danilo S. Carvalho <danilo@jaist.ac.jp>"
 
 from pymongo import MongoClient
 

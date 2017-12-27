@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+#-*- coding: utf8 -*-
+__author__ = "Danilo S. Carvalho <danilo@jaist.ac.jp>"
+
 
 import sys
 from datetime import datetime

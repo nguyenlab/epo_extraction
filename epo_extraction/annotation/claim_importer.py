@@ -1,16 +1,16 @@
-__author__ = 'danilo@jaist.ac.jp'
+__author__ = "Danilo S. Carvalho <danilo@jaist.ac.jp>"
 
-from saf.data_model.document import Document
-from saf.data_model.sentence import Sentence
-from saf.data_model.token import Token
+from saf import Document
+from saf import Sentence
+from saf import Token
 from saf.importers.importer import Importer
 from saf.constants import annotation
 from nltk.tokenize import word_tokenize
 
-from annotation import constants
+from epo_extraction.annotation import constants
 
 
-class EpoClaimImporter(Importer):
+class EPOClaimImporter(Importer):
     def __init__(self):
         self.word_tokenizer = word_tokenize
 
