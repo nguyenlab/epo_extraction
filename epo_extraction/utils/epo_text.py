@@ -21,21 +21,28 @@ def main(argv):
     with EPOCorpus("localhost", 27117) as epo_corpus:
         total_patents = epo_corpus.docs_count()
         i = 0
-        for patdoc in epo_corpus.docs_iter():
-            if (op == "text"):
+        if (op == "text"):
+            for patdoc in epo_corpus.docs_iter():
                 for sentence in patdoc.sentences:
-                    print " ".join([token.surface for token in sentence.tokens])
+                    print " ".join([token.surface.encode("utf8") for token in sentence.tokens])
 
-            elif (op == "morphodecomp"):
+                i += 1
+                print_progress(i, total_patents, 1000)
+
+        elif (op == "morphodecomp"):
+            for patdoc in epo_corpus.docs_iter():
                 morpho_annotator.annotate(patdoc, ensemble=True, config_paths=[w2m_config_filepath] * ensemble_size)
 
                 for sentence in patdoc.sentences:
-                    print " ".join([" ".join(token.annotations["MORPHO"]["decomp"]) for token in sentence.tokens])
+                    print " ".join([" ".join([morph.encode("utf8") for morph in token.annotations["MORPHO"]["decomp"]]) for token in sentence.tokens])
 
-            i += 1
-            if (i % 10000 == 0):
-                sys.stderr.write("Completed %.2f%%\n" % (float(i) * 100 / total_patents))
+                i += 1
+                print_progress(i, total_patents, 1000)
+                
 
+def print_progress(counter, total, interval):
+    if (counter % interval == 0):
+        sys.stderr.write("Completed %.2f%%\n" % (float(counter) * 100 / total))
 
 
 if __name__ == '__main__':
