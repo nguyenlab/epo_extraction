@@ -23,11 +23,11 @@ class EPODocumentImporter(Importer):
 
         sentences = []
 
-        for sent in patdoc["abstract"]["EN"]:
-            sentences.append({"text": sent, "annotations": {constants.DOC_SECTION: "ABSTR"}})
+        #for sent in patdoc["abstract"]["EN"]:
+        #    sentences.append({"text": sent, "annotations": {constants.DOC_SECTION: "ABSTR"}})
 
-        for sent in patdoc["description"]["EN"]:
-            sentences.append({"text": sent, "annotations": {constants.DOC_SECTION: "DESCR"}})
+        #for sent in patdoc["description"]["EN"]:
+        #    sentences.append({"text": sent, "annotations": {constants.DOC_SECTION: "DESCR"}})
 
         for claim in patdoc["claims"]["EN"]:
             claim_txt = u" ".join(claim["text"])
@@ -36,12 +36,12 @@ class EPODocumentImporter(Importer):
 
         for sent in sentences:
             sentence = Sentence()
+            sentence.annotations = copy.deepcopy(sent["annotations"])
 
             for token_raw in self.word_tokenizer(sent["text"]):
                 token = Token()
                 token.surface = token_raw
 
-                token.annotations = copy.deepcopy(sent["annotations"])
                 token.annotations[annotation.DEPREL] = u"0"
                 sentence.tokens.append(token)
 

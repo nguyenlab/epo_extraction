@@ -17,6 +17,7 @@ class EPOCorpus(object):
         self.conn = MongoClient(host=host, port=port)
         self.db = self.conn.epo
         self.patcoll = self.db.patents
+        self.doc_importer = EPODocumentImporter()
 
     def __enter__(self):
         return self
@@ -25,10 +26,8 @@ class EPOCorpus(object):
         self.conn.close()
 
     def docs_iter(self):
-        doc_importer = EPODocumentImporter()
-
         for patdoc in self.patcoll.find():
-            doc = doc_importer.import_document(patdoc)
+            doc = self.doc_importer.import_document(patdoc)
             yield doc
 
     def export_conll_files(self, directory):
